@@ -1,0 +1,6 @@
+# config.yaml
+paths:
+  task_root_path: "../data/benchmarks"
+  log_path: "./logs"
+  operator_json_path: '../table_agent/utils/operators/Operators.json'
+                    

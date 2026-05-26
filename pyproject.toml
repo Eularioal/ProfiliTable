@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=62", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "table-agent"        # pip install table-agent
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+    "openai>=1.0.0",
+    "langgraph==0.6.7",
+    "langgraph-checkpoint==2.1.1",
+    "langgraph-prebuilt==0.6.4",
+    "langgraph-sdk==0.2.6",
+    "langchain==0.3.27",
+    "langchain-community==0.3.29",
+    "langchain-core==0.3.76",
+    "langchain-openai==0.3.33",
+    "langchain-text-splitters==0.3.11",
+    "faiss-cpu==1.12.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "black",
+    "ruff",
+]
+
+paper = [
+    "datasets<=3.2",
+    "transformers",
+    "nltk",
+    "sentencepiece",
+    "fasttext-wheel",
+]
+
+data = [
+    "pandas",
+    "numpy<2.0.0",
+    "scipy",
+]
+
+
+[tool.setuptools.package-dir]
+"" = "."
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["table_agent*"]
+exclude = ["tests*"]
+
+[project.scripts]
+dfa = "table_agent.cli:cli"

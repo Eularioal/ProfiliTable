@@ -1,0 +1,38 @@
+from abc import ABC, abstractmethod
+from typing import List, Dict, Any, Optional
+from langchain_core.messages import BaseMessage, AIMessage
+from langchain_openai import ChatOpenAI
+from table_agent.states.base_state import MainState
+from table_agent.toolkits.tool_manager import ToolManager
+from table_agent.utils.logger import get_logger
+
+log = get_logger(__name__)
+
+class BaseLLMCaller(ABC):
+    """LLM调用器基类"""
+    
+    def __init__(self, 
+                 state: MainState,
+                 model_name: Optional[str] = None,
+                 temperature: float = 0.0,
+                 max_tokens: int = 4096,
+                 tool_mode: str = "auto",
+                 tool_manager: Optional[ToolManager] = None,
+                 chat_api_url: Optional[str] = None,):
+        self.state = state
+        self.model_name = model_name or state.request.model
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.tool_mode = tool_mode
+        self.tool_manager = tool_manager
+        self.chat_api_url = chat_api_url or state.request.chat_api_url
+    
+    # @abstractmethod
+    # async def call(self, messages: List[BaseMessage], bind_post_tools: bool = False) -> AIMessage:
+    #     """调用LLM"""
+    #     pass
+
+    @abstractmethod
+    async def __call__(self, messages: List[BaseMessage], bind_post_tools: bool = False) -> AIMessage:
+        """调用LLM"""
+        pass
